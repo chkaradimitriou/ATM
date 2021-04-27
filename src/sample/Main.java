@@ -1,55 +1,60 @@
 package sample;
 
-import sample.model.Item;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException{
-        getItemsFromKeyboard();
-    }
+    public static void main(String[] args) {
 
-    private static void getItemsFromKeyboard()  {
-        System.out.println("Enter Item Name");
-        Scanner nameScanner = new Scanner(System.in);
-        String itemName = nameScanner.nextLine();
+        Double amount = 700.75;
+        System.out.println("Παρακαλώ δώστε την επιλογή σας:");
+        System.out.println("1. Προβολή Υπολοίπου");
+        System.out.println("2. Κατάθεση");
+        System.out.println("3. Ανάληψη");
+        System.out.println("4. Επιστροφή στο αρχικό μενού");
 
-        System.out.println("Enter Item Price");
-        Scanner priceScanner = new Scanner(System.in);
-        Double price = priceScanner.nextDouble();
+        Scanner amountScanner = new Scanner(System.in);
+        Integer userChoise = amountScanner.nextInt();
 
-        System.out.println("Enter Item Quantity");
-        Scanner quantityScanner = new Scanner(System.in);
-        Integer quantity = quantityScanner.nextInt();
+        switch (userChoise) {
+            case 1: {
+                System.out.println("Επιλέξατε την επιλογή: Προβολή Υπολοίπου");
+                System.out.println("Το υπολοιπό σας είναι: " + amount + "€");
+                break;
+            }
 
-        createItem(itemName, price, quantity);
-    }
+            case 2: {
+                System.out.println("Επιλέξατε την επιλογή: Κατάθεση");
+                System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να καταθέσετε");
 
-    private static void createItem(String name, Double price, Integer quantity) {
-        Item item = new Item(name, price, quantity);
-        System.out.println("You bought:" + " " + item.getQuantity() + " x " + item.getName() + " for " + price+ "€");
+                Scanner addScanner = new Scanner(System.in);
+                Double addCash = addScanner.nextDouble();
+                amount += addCash;
 
-        File file1 = new File("out.txt");
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file1);
-        } catch (IOException e) {
-            e.printStackTrace();
+                System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                break;
+            }
+
+            case 3: {
+                System.out.println("Επιλέξατε την επιλογή: Ανάληψη");
+                System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να παραλάβετε");
+
+                Scanner removeScanner = new Scanner(System.in);
+                Double removeCash = removeScanner.nextDouble();
+                amount -= removeCash;
+
+                System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                break;
+            }
+
+            case 4: {
+                //
+            }
+
+            default: {
+                System.out.println("Αυτό που επέλεξες δεν υπάρχει.");
+                break;
+            }
         }
-        PrintWriter pw = new PrintWriter(fw);
-
-
-        pw.println(name);
-        pw.println(String.valueOf(price));
-        pw.println(quantity);
-
-        pw.close();
-
-
     }
 }
