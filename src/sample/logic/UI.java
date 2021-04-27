@@ -28,7 +28,6 @@ public class UI {
                 System.out.println("Επιλέξατε την επιλογή: Κατάθεση");
                 System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να καταθέσετε");
 
-                //Scanner addScanner = new Scanner(System.in);
                 Double addCash = amountScanner.nextDouble();
                 amount += addCash;
 
@@ -40,11 +39,16 @@ public class UI {
                 System.out.println("Επιλέξατε την επιλογή: Ανάληψη");
                 System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να παραλάβετε");
 
-                //Scanner removeScanner = new Scanner(System.in);
                 Double removeCash = amountScanner.nextDouble();
-                amount -= removeCash;
 
-                System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                if (removeCash > amount) {
+                    System.out.println("Παρουσιάστηκε σφάλμα!");
+                    System.out.println("Το υπόλοιπό σας δεν επαρκεί για να πραγματοποιηθεί η συναλλαγή.");
+                } else {
+                    amount -= removeCash;
+                    System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                }
+
                 break;
             }
 
