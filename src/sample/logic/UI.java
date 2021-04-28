@@ -6,61 +6,90 @@ public class UI {
 
     private Double amount = 700.75;
     private Integer userChoice;
+    private Scanner scanner;
 
-    public void createUI() {
+    public Choices createMenu() {
+        Choices returnChoices;
+
         System.out.println("Παρακαλώ δώστε την επιλογή σας:");
         System.out.println("1. Προβολή Υπολοίπου");
         System.out.println("2. Κατάθεση");
         System.out.println("3. Ανάληψη");
-        System.out.println("4. Επιστροφή στο αρχικό μενού");
+        System.out.println("4. Έξοδος Προγράμματος");
 
-        Scanner amountScanner = new Scanner(System.in);
-        userChoice = amountScanner.nextInt();
+        scanner = new Scanner(System.in);
 
-        switch (userChoice) {
-            case 1: {
-                System.out.println("Επιλέξατε την επιλογή: Προβολή Υπολοίπου");
-                System.out.println("Το υπολοιπό σας είναι: " + amount + "€");
-                break;
-            }
+        try {
+            userChoice = scanner.nextInt();
 
-            case 2: {
-                System.out.println("Επιλέξατε την επιλογή: Κατάθεση");
-                System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να καταθέσετε");
-
-                Double addCash = amountScanner.nextDouble();
-                amount += addCash;
-
-                System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
-                break;
-            }
-
-            case 3: {
-                System.out.println("Επιλέξατε την επιλογή: Ανάληψη");
-                System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να παραλάβετε");
-
-                Double removeCash = amountScanner.nextDouble();
-
-                if (removeCash > amount) {
-                    System.out.println("Παρουσιάστηκε σφάλμα!");
-                    System.out.println("Το υπόλοιπό σας δεν επαρκεί για να πραγματοποιηθεί η συναλλαγή.");
-                } else {
-                    amount -= removeCash;
-                    System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+            switch (userChoice) {
+                case 1: {
+                    return Choices.DISPLAY;
                 }
 
-                break;
-            }
+                case 2: {
+                    return Choices.DEPOSIT;
+                }
 
-            case 4: {
-                System.out.println("under construction");
-                break;
-            }
+                case 3: {
+                    return Choices.WITHDRAWAL;
+                }
 
-            default: {
-                System.out.println("Αυτό που επέλεξες δεν υπάρχει.");
-                break;
+                case 4: {
+                    return Choices.EXIT;
+                }
+
+                default: {
+                    return Choices.ERROR;
+                }
             }
+        } catch (Exception E) {
+            return Choices.ERROR;
         }
+    }
+
+    public void createUI() {
+        Choices userChoice;
+
+        do {
+            userChoice = createMenu();
+
+            switch (userChoice) {
+                case DISPLAY: {
+                    System.out.println("Επιλέξατε την επιλογή: Προβολή Υπολοίπου");
+                    System.out.println("Το υπολοιπό σας είναι: " + amount + "€");
+                    break;
+                }
+                case DEPOSIT: {
+                    System.out.println("Επιλέξατε την επιλογή: Κατάθεση");
+                    System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να καταθέσετε");
+
+                    Double addCash = scanner.nextDouble();
+                    amount += addCash;
+
+                    System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                    break;
+                }
+                case WITHDRAWAL: {
+                    System.out.println("Επιλέξατε την επιλογή: Ανάληψη");
+                    System.out.println("Παρακαλώ εισάγετε το ποσό που θέλετε να παραλάβετε");
+
+                    Double removeCash = scanner.nextDouble();
+
+                    if (removeCash > amount) {
+                        System.out.println("Παρουσιάστηκε σφάλμα!");
+                        System.out.println("Το υπόλοιπό σας δεν επαρκεί για να πραγματοποιηθεί η συναλλαγή.");
+                    } else {
+                        amount -= removeCash;
+                        System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
+                    }
+                    break;
+                }
+                case ERROR: {
+                    System.out.println("Αυτό που επέλεξες δεν υπάρχει.");
+                    break;
+                }
+            }
+        } while (userChoice != Choices.EXIT);
     }
 }
