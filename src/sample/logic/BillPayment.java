@@ -19,11 +19,15 @@ public class BillPayment {
         System.out.println("ΠΛηκτρολόγησε το ποσό πληρωμής");
         Double billAmount = billscanner.nextDouble();
 
-        System.out.println("Πληρώσατε " + billAmount + " € στη " + billCompany);
+        if (billAmount <= amount){
+            System.out.println("Πληρώσατε " + billAmount + " € στη " + billCompany);
 
-        Double newAmount = amount - billAmount;
-        this.amount = newAmount;
-        getNewAmount();
+            Double newAmount = amount - billAmount;
+            this.amount = newAmount;
+            getNewAmount();
+        } else {
+            System.out.println("Το υπόλοιπό σας δεν επαρκεί για να πραγματοποιηθεί η συναλλαγή");
+        }
     }
 
     public Double getNewAmount(){
