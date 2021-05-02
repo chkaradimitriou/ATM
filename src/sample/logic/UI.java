@@ -15,7 +15,8 @@ public class UI {
         System.out.println("1. Προβολή Υπολοίπου");
         System.out.println("2. Κατάθεση");
         System.out.println("3. Ανάληψη");
-        System.out.println("4. Έξοδος Προγράμματος");
+        System.out.println("4. Πληρωμή Λογαριασμού");
+        System.out.println("5. Έξοδος Προγράμματος");
 
         scanner = new Scanner(System.in);
 
@@ -36,6 +37,10 @@ public class UI {
                 }
 
                 case 4: {
+                    return Choices.BILL_PAYMENT;
+                }
+
+                case 5: {
                     return Choices.EXIT;
                 }
 
@@ -83,6 +88,13 @@ public class UI {
                         amount -= removeCash;
                         System.out.println("Το νέο σας υπόλοιπο είναι: " + amount + "€");
                     }
+                    break;
+                }
+                case BILL_PAYMENT: {
+                    BillPayment billPayment = new BillPayment();
+                    billPayment.createBillPlaymentMenu(amount);
+                    amount = billPayment.getNewAmount();
+                    System.out.println("Το υπόλοιπό μου είναι " + amount + " €");
                     break;
                 }
                 case ERROR: {
